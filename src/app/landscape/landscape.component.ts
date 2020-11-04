@@ -1,11 +1,12 @@
 import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import * as d3 from 'd3';
+import createPanZoom from 'panzoom';
 
 @Component({
   selector: 'app-landscape',
   template: `
     <svg #svg>
-      <g attr.transform="translate({{margin}},{{margin}})">
+      <g #scene attr.transform="translate({{margin}},{{margin}})">
         <!--        <line class="line" *ngFor="let link of links"-->
         <!--              [attr.x1]="this.rotateCoordinates(this.orientation)(link.source).x"-->
         <!--              [attr.x2]="this.rotateCoordinates(this.orientation)(link.target).x"-->
@@ -176,12 +177,14 @@ export class LandscapeComponent implements OnInit, OnChanges {
   @Input() orientation: ORIENTATION;
 
   @ViewChild('svg', {static: true}) canvas;
+  @ViewChild('scene', {static: true}) scene;
   public rotateCoordinates = (rotation: ORIENTATION) => (coordinates: { x: number, y: number }): { x: number, y: number } => rotation === 'vertical' ? coordinates : {
     x: coordinates.y,
     y: coordinates.x
   }
 
   ngOnInit(): void {
+    createPanZoom(this.scene.nativeElement);
     this.size = [
       this.canvas.nativeElement.getBoundingClientRect().width - this.margin * 2,
       this.canvas.nativeElement.getBoundingClientRect().height - this.margin * 2,
