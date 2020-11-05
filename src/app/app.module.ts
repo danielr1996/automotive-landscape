@@ -3,16 +3,16 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LandscapeComponent } from './landscape/landscape.component';
+import {LandscapeModule} from './landscape/landscape.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LandscapeComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    LandscapeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
